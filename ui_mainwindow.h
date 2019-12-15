@@ -41,6 +41,7 @@ public:
     QGroupBox *groupBox_2;
     QRadioButton *buttonsMode;
     QRadioButton *slidersMode;
+    QRadioButton *keyboardMode;
     QPushButton *stopButton;
     QTextEdit *logsMonitor;
     QLabel *logsMonitorLabel;
@@ -50,10 +51,12 @@ public:
     QLabel *sliderDirectionLabel;
     QSlider *turningSlider_2;
     QLabel *turningSliderLabel;
+    QLCDNumber *leftSpeedIndicator;
+    QLCDNumber *rightSpeedIndicator;
     QLCDNumber *frontRadarLCD;
     QLCDNumber *rearRadarLCD;
     QLabel *frontRadarLabel;
-    QLabel *rearRadaerLabel;
+    QLabel *rearRadarLabel;
     QLabel *cmLabel;
     QLabel *cmLabel_2;
     QMenuBar *menubar;
@@ -91,6 +94,7 @@ public:
         turningSlider = new QSlider(buttonControlBox);
         turningSlider->setObjectName(QString::fromUtf8("turningSlider"));
         turningSlider->setGeometry(QRect(40, 180, 160, 16));
+        turningSlider->setMaximum(255);
         turningSlider->setOrientation(Qt::Horizontal);
         speedLabel = new QLabel(buttonControlBox);
         speedLabel->setObjectName(QString::fromUtf8("speedLabel"));
@@ -100,13 +104,16 @@ public:
         turningLabel->setGeometry(QRect(90, 200, 67, 17));
         groupBox_2 = new QGroupBox(centralwidget);
         groupBox_2->setObjectName(QString::fromUtf8("groupBox_2"));
-        groupBox_2->setGeometry(QRect(640, 0, 141, 111));
+        groupBox_2->setGeometry(QRect(640, 0, 141, 131));
         buttonsMode = new QRadioButton(groupBox_2);
         buttonsMode->setObjectName(QString::fromUtf8("buttonsMode"));
         buttonsMode->setGeometry(QRect(10, 40, 112, 23));
         slidersMode = new QRadioButton(groupBox_2);
         slidersMode->setObjectName(QString::fromUtf8("slidersMode"));
         slidersMode->setGeometry(QRect(10, 70, 112, 23));
+        keyboardMode = new QRadioButton(groupBox_2);
+        keyboardMode->setObjectName(QString::fromUtf8("keyboardMode"));
+        keyboardMode->setGeometry(QRect(10, 100, 112, 23));
         stopButton = new QPushButton(centralwidget);
         stopButton->setObjectName(QString::fromUtf8("stopButton"));
         stopButton->setGeometry(QRect(18, 234, 311, 71));
@@ -140,6 +147,13 @@ public:
         turningSliderLabel = new QLabel(groupBox);
         turningSliderLabel->setObjectName(QString::fromUtf8("turningSliderLabel"));
         turningSliderLabel->setGeometry(QRect(60, 210, 67, 17));
+        leftSpeedIndicator = new QLCDNumber(groupBox);
+        leftSpeedIndicator->setObjectName(QString::fromUtf8("leftSpeedIndicator"));
+        leftSpeedIndicator->setGeometry(QRect(10, 60, 64, 41));
+        rightSpeedIndicator = new QLCDNumber(groupBox);
+        rightSpeedIndicator->setObjectName(QString::fromUtf8("rightSpeedIndicator"));
+        rightSpeedIndicator->setEnabled(true);
+        rightSpeedIndicator->setGeometry(QRect(120, 60, 64, 41));
         frontRadarLCD = new QLCDNumber(centralwidget);
         frontRadarLCD->setObjectName(QString::fromUtf8("frontRadarLCD"));
         frontRadarLCD->setGeometry(QRect(400, 240, 91, 31));
@@ -149,9 +163,9 @@ public:
         frontRadarLabel = new QLabel(centralwidget);
         frontRadarLabel->setObjectName(QString::fromUtf8("frontRadarLabel"));
         frontRadarLabel->setGeometry(QRect(350, 250, 41, 17));
-        rearRadaerLabel = new QLabel(centralwidget);
-        rearRadaerLabel->setObjectName(QString::fromUtf8("rearRadaerLabel"));
-        rearRadaerLabel->setGeometry(QRect(350, 280, 31, 17));
+        rearRadarLabel = new QLabel(centralwidget);
+        rearRadarLabel->setObjectName(QString::fromUtf8("rearRadarLabel"));
+        rearRadarLabel->setGeometry(QRect(350, 280, 31, 17));
         cmLabel = new QLabel(centralwidget);
         cmLabel->setObjectName(QString::fromUtf8("cmLabel"));
         cmLabel->setGeometry(QRect(500, 250, 31, 17));
@@ -185,6 +199,7 @@ public:
         groupBox_2->setTitle(QApplication::translate("MainWindow", "Tryb", nullptr));
         buttonsMode->setText(QApplication::translate("MainWindow", "Przyciski", nullptr));
         slidersMode->setText(QApplication::translate("MainWindow", "Slidery", nullptr));
+        keyboardMode->setText(QApplication::translate("MainWindow", "Klawiatura", nullptr));
         stopButton->setText(QApplication::translate("MainWindow", "STOP", nullptr));
         logsMonitorLabel->setText(QApplication::translate("MainWindow", "Monitor logow", nullptr));
         clearMonitorButton->setText(QApplication::translate("MainWindow", "Wyczysc", nullptr));
@@ -192,7 +207,7 @@ public:
         sliderDirectionLabel->setText(QApplication::translate("MainWindow", "Przod/tyl", nullptr));
         turningSliderLabel->setText(QApplication::translate("MainWindow", "Skrecanie", nullptr));
         frontRadarLabel->setText(QApplication::translate("MainWindow", "Przod", nullptr));
-        rearRadaerLabel->setText(QApplication::translate("MainWindow", "Tyl", nullptr));
+        rearRadarLabel->setText(QApplication::translate("MainWindow", "Tyl", nullptr));
         cmLabel->setText(QApplication::translate("MainWindow", "cm", nullptr));
         cmLabel_2->setText(QApplication::translate("MainWindow", "cm", nullptr));
     } // retranslateUi

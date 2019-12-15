@@ -28,6 +28,8 @@ MainWindow::MainWindow(QWidget *parent)
                                     " Drive: " + QString::number(errorFlagDrive));
         }
         ui->buttonsMode->setChecked(1);
+
+        ui->keyboardMode->installEventFilter(this);
 }
 
 MainWindow::~MainWindow()
@@ -35,6 +37,25 @@ MainWindow::~MainWindow()
     delete driveModule;
     delete sensorsModule;
     delete ui;
+}
+
+
+bool MainWindow::eventFilter(QObject *watched, QEvent *event)
+{
+    if (event->type() == QEvent::KeyPress){
+        QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
+        if (keyEvent->key() == Qt::Key_Space)
+        {
+            this->on_stopButton_clicked();
+        }
+        else if (keyEvent->key() == Qt::Key_W)
+        {
+            ui->directionSlider->setValue(ui->directionSlider->value()+1);
+        }
+        return true;
+    } else {
+        return QMainWindow::eventFilter(watched, event);
+    }
 }
 
 
@@ -51,11 +72,12 @@ void MainWindow::addToLogs(QString message)
 
 void MainWindow::on_directionSlider_valueChanged(int value)
 {
-    if (ui->slidersMode->isChecked()){
+    if (ui->slidersMode->isChecked() || ui->keyboardMode->isChecked()){
         int directionValue = ui->directionSlider->value();
         int turnValue = ui->turningSlider_2->value();
         this->driveModule->calculateSpeedForSliderMode(directionValue, turnValue);
-
+        ui->leftSpeedIndicator->display(driveModule->speedLevelLeftTrue);
+        ui->rightSpeedIndicator->display(driveModule->speedLevelRightTrue);
     }
     else {
         QString message = "Erorr at on_directionSlider_valueChanged";
@@ -65,7 +87,7 @@ void MainWindow::on_directionSlider_valueChanged(int value)
 
 void MainWindow::on_directionSlider_sliderReleased()
 {
-    if (ui->slidersMode->isChecked()){
+    if (ui->slidersMode->isChecked() || ui->keyboardMode->isChecked()){
     QString message = "Driving SliderMode | L: " + QString::number(driveModule->speedLevelLeftTrue)
             + " R: " + QString::number(driveModule->speedLevelRightTrue);
     this->addToLogs(message);
@@ -77,11 +99,12 @@ void MainWindow::on_directionSlider_sliderReleased()
 
 void MainWindow::on_turningSlider_2_valueChanged(int value)
 {
-    if (ui->slidersMode->isChecked()){
+    if (ui->slidersMode->isChecked() || ui->keyboardMode->isChecked()){
         int directionValue = ui->directionSlider->value();
         int turnValue = ui->turningSlider_2->value();
         this->driveModule->calculateSpeedForSliderMode(directionValue, turnValue);
-
+        ui->leftSpeedIndicator->display(driveModule->speedLevelLeftTrue);
+        ui->rightSpeedIndicator->display(driveModule->speedLevelRightTrue);
     }
     else {
         QString message = "Erorr at on_turningSlider_2_valueChanged";
@@ -91,7 +114,7 @@ void MainWindow::on_turningSlider_2_valueChanged(int value)
 
 void MainWindow::on_turningSlider_2_sliderReleased()
 {
-    if (ui->slidersMode->isChecked()){
+    if (ui->slidersMode->isChecked() || ui->keyboardMode->isChecked()){
     QString message = "Driving SliderMode | L: " + QString::number(driveModule->speedLevelLeftTrue)
             + " R: " + QString::number(driveModule->speedLevelRightTrue);
     this->addToLogs(message);
@@ -120,6 +143,14 @@ void MainWindow::on_slidersMode_clicked(bool checked)
 {
     if (checked){
         QString message = "Changed mode to 2: SLIDERS MODE ON!";
+        this->addToLogs(message);
+    }
+}
+
+void MainWindow::on_keyboardMode_clicked(bool checked)
+{
+    if (checked){
+        QString message = "Changed mode to 3: KEYBOARD MODE ON!";
         this->addToLogs(message);
     }
 }
@@ -229,6 +260,9 @@ void MainWindow::on_turningSlider_sliderReleased()
         this->addToLogs(message);
     }
 }
+
+
+
 
 
 

@@ -11,6 +11,9 @@
 #include <QDateTime>
 #include <QTimer>
 #include "SensorsModule.h"
+#include <QKeyEvent>
+#include <QEvent>
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -26,6 +29,8 @@ public:
     DriveModule* driveModule;
     SensorsModule* sensorsModule;
 
+protected:
+    bool eventFilter(QObject *watched, QEvent *event) override;
 
 private slots:
     void on_clearMonitorButton_clicked();
@@ -59,6 +64,8 @@ private slots:
     void on_directionSlider_sliderReleased();
 
     void on_turningSlider_2_sliderReleased();
+
+    void on_keyboardMode_clicked(bool checked);
 
 private:
     Ui::MainWindow *ui;

@@ -109,6 +109,9 @@
        <height>16</height>
       </rect>
      </property>
+     <property name="maximum">
+      <number>255</number>
+     </property>
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>
@@ -146,7 +149,7 @@
       <x>640</x>
       <y>0</y>
       <width>141</width>
-      <height>111</height>
+      <height>131</height>
      </rect>
     </property>
     <property name="title">
@@ -176,6 +179,19 @@
      </property>
      <property name="text">
       <string>Slidery</string>
+     </property>
+    </widget>
+    <widget class="QRadioButton" name="keyboardMode">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>100</y>
+       <width>112</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Klawiatura</string>
      </property>
     </widget>
    </widget>
@@ -304,17 +320,17 @@
       <string>Skrecanie</string>
      </property>
     </widget>
-    <widget class="QLCDNumber" name="lcdNumberLeftSpeed">
+    <widget class="QLCDNumber" name="leftSpeedIndicator">
      <property name="geometry">
       <rect>
        <x>10</x>
        <y>60</y>
        <width>64</width>
-       <height>23</height>
+       <height>41</height>
       </rect>
      </property>
     </widget>
-    <widget class="QLCDNumber" name="lcdNumberRightSpeed">
+    <widget class="QLCDNumber" name="rightSpeedIndicator">
      <property name="enabled">
       <bool>true</bool>
      </property>
@@ -323,7 +339,7 @@
        <x>120</x>
        <y>60</y>
        <width>64</width>
-       <height>23</height>
+       <height>41</height>
       </rect>
      </property>
     </widget>
@@ -361,7 +377,7 @@
      <string>Przod</string>
     </property>
    </widget>
-   <widget class="QLabel" name="rearRadaerLabel">
+   <widget class="QLabel" name="rearRadarLabel">
     <property name="geometry">
      <rect>
       <x>350</x>

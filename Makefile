@@ -54,12 +54,16 @@ OBJECTS_DIR   = ./
 
 SOURCES       = DriveModule.cpp \
 		SensorsModule.cpp \
+		keypresseater.cpp \
 		main.cpp \
-		mainwindow.cpp moc_mainwindow.cpp
+		mainwindow.cpp moc_keypresseater.cpp \
+		moc_mainwindow.cpp
 OBJECTS       = DriveModule.o \
 		SensorsModule.o \
+		keypresseater.o \
 		main.o \
 		mainwindow.o \
+		moc_keypresseater.o \
 		moc_mainwindow.o
 DIST          = ../../../raspi/qt5/mkspecs/features/spec_pre.prf \
 		../../../raspi/qt5/mkspecs/common/unix.conf \
@@ -236,8 +240,10 @@ DIST          = ../../../raspi/qt5/mkspecs/features/spec_pre.prf \
 		../../../raspi/qt5/mkspecs/features/lex.prf \
 		mycar.pro DriveModule.h \
 		SensorsModule.h \
+		keypresseater.h \
 		mainwindow.h DriveModule.cpp \
 		SensorsModule.cpp \
+		keypresseater.cpp \
 		main.cpp \
 		mainwindow.cpp
 QMAKE_TARGET  = mycar
@@ -615,8 +621,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents ../../../raspi/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents DriveModule.h SensorsModule.h mainwindow.h $(DISTDIR)/
-	$(COPY_FILE) --parents DriveModule.cpp SensorsModule.cpp main.cpp mainwindow.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents DriveModule.h SensorsModule.h keypresseater.h mainwindow.h $(DISTDIR)/
+	$(COPY_FILE) --parents DriveModule.cpp SensorsModule.cpp keypresseater.cpp main.cpp mainwindow.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents mainwindow.ui $(DISTDIR)/
 
 
@@ -654,9 +660,97 @@ compiler_moc_predefs_clean:
 moc_predefs.h: ../../../raspi/qt5/mkspecs/features/data/dummy.cpp
 	/home/mateusz/raspi/tools/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian-x64/bin/arm-linux-gnueabihf-g++ -pipe -marm -mfpu=vfp -mtune=arm1176jzf-s -march=armv6zk -mabi=aapcs-linux -mfloat-abi=hard --sysroot=/home/mateusz/raspi/sysroot -O2 -std=gnu++11 -Wall -W -dM -E -o moc_predefs.h ../../../raspi/qt5/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: moc_mainwindow.cpp
+compiler_moc_header_make_all: moc_keypresseater.cpp moc_mainwindow.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_mainwindow.cpp
+	-$(DEL_FILE) moc_keypresseater.cpp moc_mainwindow.cpp
+moc_keypresseater.cpp: keypresseater.h \
+		../../../raspi/qt5pi/include/QtCore/QEvent \
+		../../../raspi/qt5pi/include/QtCore/qcoreevent.h \
+		../../../raspi/qt5pi/include/QtCore/qnamespace.h \
+		../../../raspi/qt5pi/include/QtCore/qglobal.h \
+		../../../raspi/qt5pi/include/QtCore/qconfig-bootstrapped.h \
+		../../../raspi/qt5pi/include/QtCore/qconfig.h \
+		../../../raspi/qt5pi/include/QtCore/qtcore-config.h \
+		../../../raspi/qt5pi/include/QtCore/qsystemdetection.h \
+		../../../raspi/qt5pi/include/QtCore/qprocessordetection.h \
+		../../../raspi/qt5pi/include/QtCore/qcompilerdetection.h \
+		../../../raspi/qt5pi/include/QtCore/qtypeinfo.h \
+		../../../raspi/qt5pi/include/QtCore/qsysinfo.h \
+		../../../raspi/qt5pi/include/QtCore/qlogging.h \
+		../../../raspi/qt5pi/include/QtCore/qflags.h \
+		../../../raspi/qt5pi/include/QtCore/qatomic.h \
+		../../../raspi/qt5pi/include/QtCore/qbasicatomic.h \
+		../../../raspi/qt5pi/include/QtCore/qatomic_bootstrap.h \
+		../../../raspi/qt5pi/include/QtCore/qgenericatomic.h \
+		../../../raspi/qt5pi/include/QtCore/qatomic_cxx11.h \
+		../../../raspi/qt5pi/include/QtCore/qatomic_msvc.h \
+		../../../raspi/qt5pi/include/QtCore/qglobalstatic.h \
+		../../../raspi/qt5pi/include/QtCore/qmutex.h \
+		../../../raspi/qt5pi/include/QtCore/qnumeric.h \
+		../../../raspi/qt5pi/include/QtCore/qversiontagging.h \
+		../../../raspi/qt5pi/include/QtCore/qbytearray.h \
+		../../../raspi/qt5pi/include/QtCore/qrefcount.h \
+		../../../raspi/qt5pi/include/QtCore/qarraydata.h \
+		../../../raspi/qt5pi/include/QtCore/qobjectdefs.h \
+		../../../raspi/qt5pi/include/QtCore/qobjectdefs_impl.h \
+		../../../raspi/qt5pi/include/QtGui/QKeyEvent \
+		../../../raspi/qt5pi/include/QtGui/qevent.h \
+		../../../raspi/qt5pi/include/QtGui/qtguiglobal.h \
+		../../../raspi/qt5pi/include/QtGui/qtgui-config.h \
+		../../../raspi/qt5pi/include/QtGui/qwindowdefs.h \
+		../../../raspi/qt5pi/include/QtGui/qwindowdefs_win.h \
+		../../../raspi/qt5pi/include/QtGui/qregion.h \
+		../../../raspi/qt5pi/include/QtCore/qrect.h \
+		../../../raspi/qt5pi/include/QtCore/qmargins.h \
+		../../../raspi/qt5pi/include/QtCore/qsize.h \
+		../../../raspi/qt5pi/include/QtCore/qpoint.h \
+		../../../raspi/qt5pi/include/QtCore/qdatastream.h \
+		../../../raspi/qt5pi/include/QtCore/qscopedpointer.h \
+		../../../raspi/qt5pi/include/QtCore/qiodevice.h \
+		../../../raspi/qt5pi/include/QtCore/qobject.h \
+		../../../raspi/qt5pi/include/QtCore/qstring.h \
+		../../../raspi/qt5pi/include/QtCore/qchar.h \
+		../../../raspi/qt5pi/include/QtCore/qstringliteral.h \
+		../../../raspi/qt5pi/include/QtCore/qstringalgorithms.h \
+		../../../raspi/qt5pi/include/QtCore/qstringview.h \
+		../../../raspi/qt5pi/include/QtCore/qstringbuilder.h \
+		../../../raspi/qt5pi/include/QtCore/qlist.h \
+		../../../raspi/qt5pi/include/QtCore/qalgorithms.h \
+		../../../raspi/qt5pi/include/QtCore/qiterator.h \
+		../../../raspi/qt5pi/include/QtCore/qhashfunctions.h \
+		../../../raspi/qt5pi/include/QtCore/qpair.h \
+		../../../raspi/qt5pi/include/QtCore/qbytearraylist.h \
+		../../../raspi/qt5pi/include/QtCore/qstringlist.h \
+		../../../raspi/qt5pi/include/QtCore/qregexp.h \
+		../../../raspi/qt5pi/include/QtCore/qstringmatcher.h \
+		../../../raspi/qt5pi/include/QtCore/qmetatype.h \
+		../../../raspi/qt5pi/include/QtCore/qvarlengtharray.h \
+		../../../raspi/qt5pi/include/QtCore/qcontainerfwd.h \
+		../../../raspi/qt5pi/include/QtCore/qobject_impl.h \
+		../../../raspi/qt5pi/include/QtGui/qkeysequence.h \
+		../../../raspi/qt5pi/include/QtCore/qvariant.h \
+		../../../raspi/qt5pi/include/QtCore/qmap.h \
+		../../../raspi/qt5pi/include/QtCore/qdebug.h \
+		../../../raspi/qt5pi/include/QtCore/qhash.h \
+		../../../raspi/qt5pi/include/QtCore/qtextstream.h \
+		../../../raspi/qt5pi/include/QtCore/qlocale.h \
+		../../../raspi/qt5pi/include/QtCore/qshareddata.h \
+		../../../raspi/qt5pi/include/QtCore/qvector.h \
+		../../../raspi/qt5pi/include/QtCore/qset.h \
+		../../../raspi/qt5pi/include/QtCore/qcontiguouscache.h \
+		../../../raspi/qt5pi/include/QtCore/qsharedpointer.h \
+		../../../raspi/qt5pi/include/QtCore/qsharedpointer_impl.h \
+		../../../raspi/qt5pi/include/QtCore/qurl.h \
+		../../../raspi/qt5pi/include/QtCore/qurlquery.h \
+		../../../raspi/qt5pi/include/QtCore/qfile.h \
+		../../../raspi/qt5pi/include/QtCore/qfiledevice.h \
+		../../../raspi/qt5pi/include/QtGui/qvector2d.h \
+		../../../raspi/qt5pi/include/QtGui/qtouchdevice.h \
+		../../../raspi/qt5pi/include/QtCore/QObject \
+		moc_predefs.h \
+		../../../raspi/qt5/bin/moc
+	/home/mateusz/raspi/qt5/bin/moc $(DEFINES) --include /home/mateusz/Desktop/QtPojects/mycar/moc_predefs.h -I/home/mateusz/raspi/qt5/mkspecs/devices/linux-rasp-pi-g++ -I/home/mateusz/Desktop/QtPojects/mycar -I/raspi/sysroot/usr/include -I/home/mateusz/raspi/qt5pi/include -I/home/mateusz/raspi/qt5pi/include/QtWidgets -I/home/mateusz/raspi/qt5pi/include/QtGui -I/home/mateusz/raspi/qt5pi/include/QtCore -I/home/mateusz/raspi/tools/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian-x64/arm-linux-gnueabihf/include/c++/4.8.3 -I/home/mateusz/raspi/tools/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian-x64/arm-linux-gnueabihf/include/c++/4.8.3/arm-linux-gnueabihf -I/home/mateusz/raspi/tools/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian-x64/arm-linux-gnueabihf/include/c++/4.8.3/backward -I/home/mateusz/raspi/tools/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian-x64/lib/gcc/arm-linux-gnueabihf/4.8.3/include -I/home/mateusz/raspi/tools/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian-x64/lib/gcc/arm-linux-gnueabihf/4.8.3/include-fixed -I/home/mateusz/raspi/tools/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian-x64/arm-linux-gnueabihf/include -I/home/mateusz/raspi/sysroot/usr/include -I/home/mateusz/raspi/sysroot/usr/include/arm-linux-gnueabihf keypresseater.h -o moc_keypresseater.cpp
+
 moc_mainwindow.cpp: mainwindow.h \
 		../../../raspi/qt5pi/include/QtWidgets/QMainWindow \
 		../../../raspi/qt5pi/include/QtWidgets/qmainwindow.h \
@@ -773,6 +867,8 @@ moc_mainwindow.cpp: mainwindow.h \
 		../../../raspi/qt5pi/include/QtCore/qtimer.h \
 		../../../raspi/qt5pi/include/QtCore/qbasictimer.h \
 		SensorsModule.h \
+		../../../raspi/qt5pi/include/QtGui/QKeyEvent \
+		../../../raspi/qt5pi/include/QtCore/QEvent \
 		moc_predefs.h \
 		../../../raspi/qt5/bin/moc
 	/home/mateusz/raspi/qt5/bin/moc $(DEFINES) --include /home/mateusz/Desktop/QtPojects/mycar/moc_predefs.h -I/home/mateusz/raspi/qt5/mkspecs/devices/linux-rasp-pi-g++ -I/home/mateusz/Desktop/QtPojects/mycar -I/raspi/sysroot/usr/include -I/home/mateusz/raspi/qt5pi/include -I/home/mateusz/raspi/qt5pi/include/QtWidgets -I/home/mateusz/raspi/qt5pi/include/QtGui -I/home/mateusz/raspi/qt5pi/include/QtCore -I/home/mateusz/raspi/tools/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian-x64/arm-linux-gnueabihf/include/c++/4.8.3 -I/home/mateusz/raspi/tools/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian-x64/arm-linux-gnueabihf/include/c++/4.8.3/arm-linux-gnueabihf -I/home/mateusz/raspi/tools/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian-x64/arm-linux-gnueabihf/include/c++/4.8.3/backward -I/home/mateusz/raspi/tools/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian-x64/lib/gcc/arm-linux-gnueabihf/4.8.3/include -I/home/mateusz/raspi/tools/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian-x64/lib/gcc/arm-linux-gnueabihf/4.8.3/include-fixed -I/home/mateusz/raspi/tools/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian-x64/arm-linux-gnueabihf/include -I/home/mateusz/raspi/sysroot/usr/include -I/home/mateusz/raspi/sysroot/usr/include/arm-linux-gnueabihf mainwindow.h -o moc_mainwindow.cpp
@@ -918,6 +1014,92 @@ SensorsModule.o: SensorsModule.cpp SensorsModule.h \
 		../../../raspi/qt5pi/include/QtCore/qbasictimer.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o SensorsModule.o SensorsModule.cpp
 
+keypresseater.o: keypresseater.cpp keypresseater.h \
+		../../../raspi/qt5pi/include/QtCore/QEvent \
+		../../../raspi/qt5pi/include/QtCore/qcoreevent.h \
+		../../../raspi/qt5pi/include/QtCore/qnamespace.h \
+		../../../raspi/qt5pi/include/QtCore/qglobal.h \
+		../../../raspi/qt5pi/include/QtCore/qconfig-bootstrapped.h \
+		../../../raspi/qt5pi/include/QtCore/qconfig.h \
+		../../../raspi/qt5pi/include/QtCore/qtcore-config.h \
+		../../../raspi/qt5pi/include/QtCore/qsystemdetection.h \
+		../../../raspi/qt5pi/include/QtCore/qprocessordetection.h \
+		../../../raspi/qt5pi/include/QtCore/qcompilerdetection.h \
+		../../../raspi/qt5pi/include/QtCore/qtypeinfo.h \
+		../../../raspi/qt5pi/include/QtCore/qsysinfo.h \
+		../../../raspi/qt5pi/include/QtCore/qlogging.h \
+		../../../raspi/qt5pi/include/QtCore/qflags.h \
+		../../../raspi/qt5pi/include/QtCore/qatomic.h \
+		../../../raspi/qt5pi/include/QtCore/qbasicatomic.h \
+		../../../raspi/qt5pi/include/QtCore/qatomic_bootstrap.h \
+		../../../raspi/qt5pi/include/QtCore/qgenericatomic.h \
+		../../../raspi/qt5pi/include/QtCore/qatomic_cxx11.h \
+		../../../raspi/qt5pi/include/QtCore/qatomic_msvc.h \
+		../../../raspi/qt5pi/include/QtCore/qglobalstatic.h \
+		../../../raspi/qt5pi/include/QtCore/qmutex.h \
+		../../../raspi/qt5pi/include/QtCore/qnumeric.h \
+		../../../raspi/qt5pi/include/QtCore/qversiontagging.h \
+		../../../raspi/qt5pi/include/QtCore/qbytearray.h \
+		../../../raspi/qt5pi/include/QtCore/qrefcount.h \
+		../../../raspi/qt5pi/include/QtCore/qarraydata.h \
+		../../../raspi/qt5pi/include/QtCore/qobjectdefs.h \
+		../../../raspi/qt5pi/include/QtCore/qobjectdefs_impl.h \
+		../../../raspi/qt5pi/include/QtGui/QKeyEvent \
+		../../../raspi/qt5pi/include/QtGui/qevent.h \
+		../../../raspi/qt5pi/include/QtGui/qtguiglobal.h \
+		../../../raspi/qt5pi/include/QtGui/qtgui-config.h \
+		../../../raspi/qt5pi/include/QtGui/qwindowdefs.h \
+		../../../raspi/qt5pi/include/QtGui/qwindowdefs_win.h \
+		../../../raspi/qt5pi/include/QtGui/qregion.h \
+		../../../raspi/qt5pi/include/QtCore/qrect.h \
+		../../../raspi/qt5pi/include/QtCore/qmargins.h \
+		../../../raspi/qt5pi/include/QtCore/qsize.h \
+		../../../raspi/qt5pi/include/QtCore/qpoint.h \
+		../../../raspi/qt5pi/include/QtCore/qdatastream.h \
+		../../../raspi/qt5pi/include/QtCore/qscopedpointer.h \
+		../../../raspi/qt5pi/include/QtCore/qiodevice.h \
+		../../../raspi/qt5pi/include/QtCore/qobject.h \
+		../../../raspi/qt5pi/include/QtCore/qstring.h \
+		../../../raspi/qt5pi/include/QtCore/qchar.h \
+		../../../raspi/qt5pi/include/QtCore/qstringliteral.h \
+		../../../raspi/qt5pi/include/QtCore/qstringalgorithms.h \
+		../../../raspi/qt5pi/include/QtCore/qstringview.h \
+		../../../raspi/qt5pi/include/QtCore/qstringbuilder.h \
+		../../../raspi/qt5pi/include/QtCore/qlist.h \
+		../../../raspi/qt5pi/include/QtCore/qalgorithms.h \
+		../../../raspi/qt5pi/include/QtCore/qiterator.h \
+		../../../raspi/qt5pi/include/QtCore/qhashfunctions.h \
+		../../../raspi/qt5pi/include/QtCore/qpair.h \
+		../../../raspi/qt5pi/include/QtCore/qbytearraylist.h \
+		../../../raspi/qt5pi/include/QtCore/qstringlist.h \
+		../../../raspi/qt5pi/include/QtCore/qregexp.h \
+		../../../raspi/qt5pi/include/QtCore/qstringmatcher.h \
+		../../../raspi/qt5pi/include/QtCore/qmetatype.h \
+		../../../raspi/qt5pi/include/QtCore/qvarlengtharray.h \
+		../../../raspi/qt5pi/include/QtCore/qcontainerfwd.h \
+		../../../raspi/qt5pi/include/QtCore/qobject_impl.h \
+		../../../raspi/qt5pi/include/QtGui/qkeysequence.h \
+		../../../raspi/qt5pi/include/QtCore/qvariant.h \
+		../../../raspi/qt5pi/include/QtCore/qmap.h \
+		../../../raspi/qt5pi/include/QtCore/qdebug.h \
+		../../../raspi/qt5pi/include/QtCore/qhash.h \
+		../../../raspi/qt5pi/include/QtCore/qtextstream.h \
+		../../../raspi/qt5pi/include/QtCore/qlocale.h \
+		../../../raspi/qt5pi/include/QtCore/qshareddata.h \
+		../../../raspi/qt5pi/include/QtCore/qvector.h \
+		../../../raspi/qt5pi/include/QtCore/qset.h \
+		../../../raspi/qt5pi/include/QtCore/qcontiguouscache.h \
+		../../../raspi/qt5pi/include/QtCore/qsharedpointer.h \
+		../../../raspi/qt5pi/include/QtCore/qsharedpointer_impl.h \
+		../../../raspi/qt5pi/include/QtCore/qurl.h \
+		../../../raspi/qt5pi/include/QtCore/qurlquery.h \
+		../../../raspi/qt5pi/include/QtCore/qfile.h \
+		../../../raspi/qt5pi/include/QtCore/qfiledevice.h \
+		../../../raspi/qt5pi/include/QtGui/qvector2d.h \
+		../../../raspi/qt5pi/include/QtGui/qtouchdevice.h \
+		../../../raspi/qt5pi/include/QtCore/QObject
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o keypresseater.o keypresseater.cpp
+
 main.o: main.cpp mainwindow.h \
 		../../../raspi/qt5pi/include/QtWidgets/QMainWindow \
 		../../../raspi/qt5pi/include/QtWidgets/qmainwindow.h \
@@ -1034,6 +1216,8 @@ main.o: main.cpp mainwindow.h \
 		../../../raspi/qt5pi/include/QtCore/qtimer.h \
 		../../../raspi/qt5pi/include/QtCore/qbasictimer.h \
 		SensorsModule.h \
+		../../../raspi/qt5pi/include/QtGui/QKeyEvent \
+		../../../raspi/qt5pi/include/QtCore/QEvent \
 		../../../raspi/qt5pi/include/QtWidgets/QApplication \
 		../../../raspi/qt5pi/include/QtWidgets/qapplication.h \
 		../../../raspi/qt5pi/include/QtCore/qcoreapplication.h \
@@ -1159,6 +1343,8 @@ mainwindow.o: mainwindow.cpp mainwindow.h \
 		../../../raspi/qt5pi/include/QtCore/qtimer.h \
 		../../../raspi/qt5pi/include/QtCore/qbasictimer.h \
 		SensorsModule.h \
+		../../../raspi/qt5pi/include/QtGui/QKeyEvent \
+		../../../raspi/qt5pi/include/QtCore/QEvent \
 		ui_mainwindow.h \
 		../../../raspi/qt5pi/include/QtCore/QVariant \
 		../../../raspi/qt5pi/include/QtWidgets/QApplication \
@@ -1200,6 +1386,9 @@ mainwindow.o: mainwindow.cpp mainwindow.h \
 		../../../raspi/qt5pi/include/QtGui/qpen.h \
 		../../../raspi/qt5pi/include/QtWidgets/QWidget
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o mainwindow.cpp
+
+moc_keypresseater.o: moc_keypresseater.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_keypresseater.o moc_keypresseater.cpp
 
 moc_mainwindow.o: moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp

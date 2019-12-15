@@ -19,12 +19,14 @@ INCLUDEPATH += /raspi/sysroot/usr/include/
 SOURCES += \
     DriveModule.cpp \
     SensorsModule.cpp \
+    keypresseater.cpp \
     main.cpp \
     mainwindow.cpp
 
 HEADERS += \
     DriveModule.h \
     SensorsModule.h \
+    keypresseater.h \
     mainwindow.h
 
 FORMS += \
